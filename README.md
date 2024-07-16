@@ -57,5 +57,7 @@ Simplicity meets innovation in our implementation:
 - **Ease of Implementation:** Deploy AI solutions swiftly with minimal coding.
 - **Simplified Maintenance:** Azure automates updates and monitoring.
 - **Reliability and Security:** Rest easy with Azure's robust infrastructure.
+  
+##Deployed Link:https://money-mantra-pi.vercel.app/
 
 
