@@ -58,6 +58,6 @@ Simplicity meets innovation in our implementation:
 - **Simplified Maintenance:** Azure automates updates and monitoring.
 - **Reliability and Security:** Rest easy with Azure's robust infrastructure.
   
-##Deployed Link:https://money-mantra-pi.vercel.app/
+## Deployed Link:https://money-mantra-pi.vercel.app/
 
 
