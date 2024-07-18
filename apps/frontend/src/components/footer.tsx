@@ -1,4 +1,4 @@
-import React, { SVGProps } from "react";
+import  { SVGProps } from "react";
 import {Link} from "react-router-dom";
 
 type Props = {};

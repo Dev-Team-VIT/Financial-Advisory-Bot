@@ -22,7 +22,13 @@ const  userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 6
-    }
+    },
+    customerId: {
+        type: String,
+        required: false
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 
 })
 

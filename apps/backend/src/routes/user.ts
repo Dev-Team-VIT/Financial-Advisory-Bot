@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken"
 import { User } from "../db"
 import { JWT_SECRET } from "../config"
 import { router } from "."
+import nodemailer from "nodemailer"
+import bcrypt from "bcrypt"
+import { resetPassword } from "../middleware"
+
 const userRouter = express.Router()
 
 const signUpBody = zod.object({
@@ -11,6 +15,14 @@ const signUpBody = zod.object({
     username: zod.string(),
     password: zod.string()
 })
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'your-email@gmail.com',
+      pass: 'your-email-password'
+    }
+  });
 
 userRouter.post("/signup", async (req, res) => {
     const  parsedInput  = signUpBody.safeParse(req.body);
@@ -72,6 +84,70 @@ userRouter.post("/signin", async (req, res) => {
             token: token
         })
         return;
+    }
+})
+
+userRouter.post('/forgot-password', async (req, res) => {
+    const {email} = req.body;
+    const user = await User.findOne({email})
+
+    if(!user) {
+        res.status(403).json({
+            message: "User does not exist"
+        })
+    }
+        // generate token for reset
+    const token = jwt.sign({
+        email: email
+    }, JWT_SECRET, {
+        expiresIn: '1h'
+    })
+
+    if(user) {
+        user.resetPasswordToken = token
+        user.resetPasswordExpires = new Date(Date.now() + 3600000);
+        await user.save();
+    }
+
+    const mailOptions = {
+        from: 'your-email@gmail.com',
+        to: email,
+        subject: 'Password Reset',
+        text: `Click the link to reset your password: http://localhost:3000/reset-password/${token}`
+      };
+
+
+      transporter.sendMail(mailOptions, (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Failed to send email' });
+        }
+        res.status(200).json({ message: 'Password reset email sent' });
+      });
+
+      res.status(200).json({
+        token: token
+      })
+})
+
+userRouter.post('/reset-password/:token', resetPassword ,async (req: any, res: any) =>{
+    
+    const {newPassword} = req.body;
+
+    try {
+        const hashedPass = await bcrypt.hash(newPassword, 10);
+        req.user.password = hashedPass
+        req.user.resetPasswordToken = undefined;
+        req.user.resetPasswordExpires = undefined;
+        await req.user.save();
+
+
+        res.status(200).json({
+            message: "Password has been reset"
+        })
+    } catch(err) {
+        res.status(400).json({
+            error: err
+        })
     }
 })
 
