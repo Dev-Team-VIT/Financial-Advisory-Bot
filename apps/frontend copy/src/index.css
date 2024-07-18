@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0 100%; /* White background */
+    --grey-bg: 0, 0%, 96%;
+    --muted-orange: 15, 99%, 72%;
+    --primary: 23, 100%, 53%; /* Vibrant orange primary color */
+    --primary-foreground: 0 0 0%; /* Black text on primary */
+    --secondary: 220, 89%, 10%; /* Medium blue secondary color */
+    --secondary-foreground: 0 0 100%; /* White text on secondary */
+    --accent: 30 100% 70%; /* Lighter orange accent */
+    --accent-foreground: 0 0 0%; /* Black text on accent */
+    --muted: 0 0 90%; /* Light gray muted color */
+    --muted-foreground: 0 0 60%; /* Dark gray text on muted */
+    --border: 0 0 85%; /* Light gray border color */
+    --input: 0 0 95%; /* Very light gray input background */
+    --ring: 210 80% 40%; /* Blue focus ring color */
+    --radius: 0.5rem; /* Default border radius */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
