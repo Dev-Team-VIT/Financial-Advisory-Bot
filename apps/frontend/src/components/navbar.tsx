@@ -18,27 +18,29 @@ function Navbar() {
 
   window.addEventListener('scroll', onScroll);
   return (
-    <header className={`${scrolled?'bg-secondary':'bg-bgGrey'} sticky top-0 z-20 transition ease-in-out`}>
+    <header className={`${scrolled?'bg-background':'bg-bgGrey'} sticky top-0 z-20 transition ease-in-out`}>
       <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-        <Link to="#" className={`text-lg font-bold ${scrolled?'text-background': 'text-[black]'} transition ease-in-out`} >
-          Money Mantra
+        <Link to="#" className={`text-lg font-bold ${scrolled?'text-[black]': 'text-[black]'} transition ease-in-out`} >
+          Money Mantra 
         </Link>
         <nav className="hidden space-x-4 md:flex">
-          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[background]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
+          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[black]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
             Home
           </Link>
-          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[background]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
+          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[black]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
             What we offer?
           </Link>
-          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[background]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
+          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[black]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
             About
           </Link>
-          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[background]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
+          <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled?'text-[black]':'text-[black]'} hover:text-secondary transition ease-in-out`}>
             Contact Us
           </Link>
         </nav>
         <Sheet>
-        <Button className="md:hidden hover:bg-mutedOrange text-background rounded-[50px] w-[100px]">Login</Button>
+        <Link to={'/login'}>
+          <Button className="md:hidden hover:bg-mutedOrange text-background rounded-[50px] w-[100px]">Login</Button>
+        </Link>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="md:hidden">
               <MenuIcon className="h-6 w-6" />
