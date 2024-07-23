@@ -21,7 +21,7 @@ export function Hero() {
                   <Link
                     to="#"
                     className="inline-flex items-center rounded-md bg-primary px-5 py-2 text-lg font-medium text-background shadow-sm transition-colors hover:bg-mutedOrange focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                  >Get in Touch
+                  >Get Advice
                   </Link>
                 </div>
               </div>
