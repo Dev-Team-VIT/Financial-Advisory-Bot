@@ -3,6 +3,7 @@ import './App.css'
 import Landing from './pages/Landing'
 import UserHandling from './pages/loginLogout'
 import Advisory from './pages/advisory'
+import { Logout } from './pages/logout'
 
 function App() {
 
@@ -15,8 +16,7 @@ function App() {
       <Route path='/login' element={<UserHandling type = "login"/>} />
       <Route path='/signup' element={<UserHandling type = "signup"/>} />
       <Route path='/advisory' element={<Advisory/>}/>
-
-
+      <Route path='/logout' element={<Logout/>}/>
 
     </Routes>
     </BrowserRouter>

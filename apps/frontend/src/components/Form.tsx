@@ -61,9 +61,9 @@ function Form() {
   };
 
   return (
-    <main className='w-[70%] flex flex-col gap-[20px]'>
+    <main className='w-[100%] md:w-[70%] flex flex-col gap-[20px]'>
       {currentForm === 1 && (
-        <div className='form1 border p-10 w-[100%] flex flex-row gap-[20px] rounded-lg'>
+        <div className='form1 md:border p-10 w-[100%] flex flex-col justify-center align-center md:flex-row gap-[20px] rounded-lg'>
           <div className='flex flex-col w-full justify-around gap-[30px]'>
             <div>
               <Input placeholder='First Name' type='text' name='firstname' className='rounded-lg' value={formOneData.firstname} onChange={(e) => setFormOneData({ ...formOneData, firstname: e.target.value })}></Input>
@@ -99,10 +99,10 @@ function Form() {
         </div>
       )}
       {currentForm === 2 && (
-        <div className='form2 border p-10 w-[100%] flex flex-row gap-[20px] rounded-lg'>
+        <div className='form2 md:border p-10 w-[100%] flex flex-col md:flex-row gap-[20px] rounded-lg'>
           <div className='flex flex-col w-full justify-around gap-[30px]'>
             <div>
-              <Input placeholder='Annual Income' type='text' name='annua lIncome' className='rounded-lg' value={formTwoData.annualIncome} onChange={(e) => setFormTwoData({ ...formTwoData, annualIncome: e.target.value })}></Input>
+              <Input placeholder='Annual Income' type='text' name='annual Income' className='rounded-lg' value={formTwoData.annualIncome} onChange={(e) => setFormTwoData({ ...formTwoData, annualIncome: e.target.value })}></Input>
             </div>
             <div>
               <Input placeholder='Fixed Deposits' type='text' name='fixed Deposits' className='rounded-lg' value={formTwoData.fixedDeposits} onChange={(e) => setFormTwoData({ ...formTwoData, fixedDeposits: e.target.value })}></Input>

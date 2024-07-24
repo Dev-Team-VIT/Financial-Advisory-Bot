@@ -1,15 +1,13 @@
 import express from "express"
 import { validate } from "./middleware"
 import { router } from "./routes";
+import { connectDB } from "./db";
+import cors from 'cors';
 
 const app = express()
 
 app.use(express.json());
-
-// app.use(cors({
-
-// }))
-
+app.use(cors());
 app.use("/api/v1", router)
 
 export const validateCustomerIds = ["alpha123", "kwjd07", "hack1899"]
@@ -31,5 +29,6 @@ app.post("/dashboard", validate, (req, res) => {
 
 app.listen(3000, ()=> {
     console.log("Server started");
+    connectDB();
     
 })

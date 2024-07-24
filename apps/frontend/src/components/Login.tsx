@@ -4,30 +4,71 @@ import Input from './ui/input';
 import { Button } from './ui/button';
 import { Separator } from "./ui/separator";
 import Google from '../assets/Google.svg';
+import axios from 'axios';
+import { redirect, useNavigate } from 'react-router-dom';
+
+interface loginData{
+  email:string,
+  password:string
+}
+
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const nav = useNavigate();
+  const [loginData, setLoginData] = useState<loginData>({email:'', password:''});
+  const url = "http://localhost:3000/api/v1/user/signin"
+  const [validationMessage, setValidationMessage] = useState('');
+  const [validPassword, setValidPassword] = useState(false);
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    const {name, value} = e.target;
+    setLoginData(prevData =>({...prevData,[name]:value}));
   };
 
-  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-    console.log('Login Form Data:', formData);
+    try{
+      const res = await axios.post(url, loginData);
+      localStorage.setItem("token", res.data.token);
+
+      localStorage.setItem("username", res.data.username);
+      nav('/')
+    }
+    catch(err){
+      console.log(err);
+    };
+  }
+  const handlePass = (e: ChangeEvent<HTMLInputElement>) => {
+    const password = e.target.value;
+    setLoginData((prevData) => ({
+      ...prevData,
+      password,
+    }));
+
+    if (password.length >= 8) {
+      setValidPassword(true);
+      setValidationMessage('');
+    } else {
+      setValidPassword(false);
+      setValidationMessage('Password must be at least 8 characters long');
+    }
+
   };
 
   return (
     <form className='login flex flex-col w-[fit-content] h-[100vh] items-center justify-center gap-[20px] m-[-100px]' onSubmit={handleSubmit}>
       <h1 className='text-2xl md:text-5xl mb-[50px] font-bold'>Login to Money Mantra</h1>
-      <Input type='email' name='email' placeholder='Enter your email' className='px-[15px] w-[300px] outline-none md:w-[400px]' />
-      <Input type='password' name='password' placeholder='Enter your Password' className='px-[15px] w-[300px] md:w-[400px] outline-none'/>
+      <Input type='email' value={loginData.email} onChange={handleChange} name='email' placeholder='Enter your email' className='px-[15px] w-[300px] outline-none md:w-[400px]' />
+      <Input
+        type='password'
+        value={loginData.password}
+        onChange={handlePass}
+        name='password'
+        placeholder='Enter your Password'
+        className={`px-[15px] w-[300px] md:w-[400px] outline-none ${
+          validPassword ? 'focus:border-2 focus:border-[green]' : 'focus:border-2 focus:border-[red]'
+        }`}
+      />
+      {validationMessage && <label htmlFor='password' className='text-[12px] mt-[-20px] text-red-500'>{validationMessage}</label>}
       <div className='flex flex-row justify-between w-[280px] md:w-[380px]'>
         <div className='flex flex-row justify-center items-center gap-[5px]'>
           <input type="radio" name="remember" id="remember" />

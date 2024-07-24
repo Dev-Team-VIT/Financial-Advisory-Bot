@@ -39,7 +39,6 @@ userRouter.post("/signup", async (req, res) => {
     if(existingUser) {
         res.status(411).json({message: "Email already exists"})
     }
-
     const newUser = await User.create({
         email: req.body.email,
         username: req.body.username,
@@ -53,7 +52,8 @@ userRouter.post("/signup", async (req, res) => {
 
     res.status(200).json({
         message: "Signed up Successfully",
-        token: token
+        token: token,
+        username:newUser.username,
     })
 })
 
@@ -74,6 +74,7 @@ userRouter.post("/signin", async (req, res) => {
     const existingUser = await User.findOne({
         email: req.body.email
     })
+    const user = existingUser?.username;
 
     if(existingUser) {
         const token = jwt.sign({
@@ -81,7 +82,8 @@ userRouter.post("/signin", async (req, res) => {
         }, JWT_SECRET)
         res.status(200).json({
             message: "Logged In successFully",
-            token: token
+            token: token, 
+            username:user,
         })
         return;
     }

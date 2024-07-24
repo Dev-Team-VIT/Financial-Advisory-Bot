@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost:27017/moneyMantra",)
+import dotenv from 'dotenv'
+dotenv.config()
+// const db = (process.env.DATABASE)?.toString()
+
+export const connectDB = async () =>{
+    try {
+        await mongoose.connect(process.env.DATABASE as string).then( () =>{
+            console.log("Database Connected");
+        })
+    }catch(error){
+        console.log(error as Error);
+        process.exit(1);
+    };
+}
 
 const  userSchema = new mongoose.Schema({
     email: {

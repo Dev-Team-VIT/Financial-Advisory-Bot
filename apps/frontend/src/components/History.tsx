@@ -7,17 +7,16 @@ type Props = {}
 function History({}: Props) {
   return (
     <>
-        <section className='w-[30vw] h-[90vh] bg-background rounded-lg p-5'>
+        <section className='w-[30vw] h-[90vh] bg-background rounded-lg p-5 hidden md:block'>
             <div className="header flex flex-row justify-between p-[20px]">
                 <h2 className='font-bold text-xl'>Your History</h2>
                 <img src={h_icon} alt="" />
             </div>
-            <Separator></Separator>
+            <Separator className='hidden'></Separator>
             <div className="history-container py-5">
                 <HistoryBar text='Suggest me how to invest in big companies'></HistoryBar>
             </div>
-        </section>
-        
+        </section>        
     </>
   )
 }
