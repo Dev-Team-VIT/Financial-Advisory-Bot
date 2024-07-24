@@ -1,6 +1,16 @@
 import os
 import json
+import matplotlib.pyplot as plt
+
 from openai import AzureOpenAI
+
+
+investment_type = input() #"Enter High risk,low risk,medium risk  
+annual_income = "₹10 lakhs"  
+num_fds = int(input()) #count of fds
+fd_amounts = "₹4 lakhs each"  
+mutual_fund_investment = input() #total mutual fund investment
+investment_options_type = input() #high-risk,medium-risk,low-risk  
 
 client = AzureOpenAI(
     api_key="2142e2507c494b74999fb3bb680aca1e",
@@ -16,13 +26,13 @@ except Exception as e:
     raise
 try:
     message_content = (
-        "I am seeking high-risk investment advice based on my current financial situation. "
-        "Here are the details:\n"
-        "Annual Income: ₹10 lakhs\n"
-        "Fixed Deposits (FDs): 2 FDs of ₹4 lakhs each\n"
-        "Mutual Funds: Investment of ₹6-7 lakhs\n"
-        "Given this financial status, could you suggest some suitable high-risk investment options "
-        "that can help me diversify my portfolio and achieve high returns?\n"
+        f"I am seeking {investment_type} investment advice based on my current financial situation. "
+        f"Here are the details:\n"
+        f"Annual Income: {annual_income}\n"
+        f"Fixed Deposits (FDs): {num_fds} FDs of {fd_amounts}\n"
+        f"Mutual Funds: Investment of {mutual_fund_investment}\n"
+        f"Given this financial status, could you suggest some suitable {investment_options_type} investment options "
+        f"that can help me diversify my portfolio and achieve high returns?\n"
         "Provide me specific information naming certain companies, FDs, stocks, and with their analytical data."
     )
 
