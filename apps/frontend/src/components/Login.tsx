@@ -16,7 +16,7 @@ interface loginData{
 function Login() {
   const nav = useNavigate();
   const [loginData, setLoginData] = useState<loginData>({email:'', password:''});
-  const url = "http://localhost:3000/api/v1/user/signin"
+  const url = "https://financial-advisory-bot-production.up.railway.app/api/v1/user/signin"
   const [validationMessage, setValidationMessage] = useState('');
   const [validPassword, setValidPassword] = useState(false);
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{

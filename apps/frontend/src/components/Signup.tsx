@@ -13,7 +13,7 @@ interface SignupFormState {
 }
 
 function Signup() {
-  const url = 'http://localhost:3000/api/v1/user/signup';
+  const url = 'https://financial-advisory-bot-production.up.railway.app/api/v1/user/signup';
   const [formData, setFormData] = useState<SignupFormState>({
     username: '',
     email: '',
