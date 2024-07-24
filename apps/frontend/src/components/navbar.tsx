@@ -44,13 +44,13 @@ function Navbar() {
             Money Mantra
           </Link>
           <nav className="hidden space-x-4 md:flex">
-            <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
+            <Link to="/" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
               Home
             </Link>
-            <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
+            <Link to="#services" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
               What we offer?
             </Link>
-            <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
+            <Link to="#aboutus" hrefLang="#aboutus" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
               About
             </Link>
             <Link to="#" className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${scrolled ? 'text-[black]' : 'text-[black]'} hover:text-secondary transition ease-in-out`}>
@@ -58,7 +58,9 @@ function Navbar() {
             </Link>
           </nav>
           {username ? (
-            <span className="md:block hidden">{username}</span>
+            <Avatar>
+              <AvatarFallback>{((username.charAt(0)) + (username.charAt(1))).toUpperCase()}</AvatarFallback>
+            </Avatar>
           ) : (
             <Link to={"/login"}>
               <Button className="md:block hidden hover:bg-mutedOrange text-background rounded-[50px] w-[100px]">Login</Button>
@@ -89,7 +91,7 @@ function Navbar() {
             <div className="flex gap-5">
               {username ? (
                 <Avatar>
-                  <AvatarFallback>{((username.charAt(0))+(username.charAt(1))).toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>{((username.charAt(0)) + (username.charAt(1))).toUpperCase()}</AvatarFallback>
                 </Avatar>
 
               ) : (
@@ -106,17 +108,14 @@ function Navbar() {
             </div>
             <SheetContent side="right">
               <div className="grid gap-4 p-4">
-                <Link to="#" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
+                <Link to="/" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
                   Home
                 </Link>
                 <Link to="#" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
-                  About Us
-                </Link>
-                <Link to="#" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
-                  Services
-                </Link>
-                <Link to="#" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
                   Contact
+                </Link>
+                <Link to="/logout" className="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground">
+                  Logout
                 </Link>
               </div>
             </SheetContent>

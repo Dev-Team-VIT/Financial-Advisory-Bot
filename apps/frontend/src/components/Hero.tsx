@@ -19,7 +19,7 @@ export function Hero() {
                 </p>
                 <div className="mt-6">
                   <Link
-                    to="#"
+                    to="/advisory"
                     className="inline-flex items-center rounded-md bg-primary px-5 py-2 text-lg font-medium text-background shadow-sm transition-colors hover:bg-mutedOrange focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   >Get Advice
                   </Link>

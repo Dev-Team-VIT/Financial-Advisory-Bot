@@ -84,10 +84,10 @@ function Login() {
         <p>OR</p>
         <Separator className='my-4 bg-[black]'></Separator>
       </div>
-      <div className='flex flex-row gap-[10px] border rounded-[50px] w-[300px] md:w-[400px] border-[2px] border-primary p-[5px] items-center justify-center cursor-pointer'>
+      {/* <div className='flex flex-row gap-[10px] border rounded-[50px] w-[300px] md:w-[400px] border-[2px] border-primary p-[5px] items-center justify-center cursor-pointer'>
         <img src={Google} alt="google" />
         <p className='text-xl text-primary'>Google</p>
-      </div>
+      </div> */}
     </form>
   );
 }

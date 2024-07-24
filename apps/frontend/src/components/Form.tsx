@@ -124,7 +124,7 @@ function Form() {
           </div>
         </div>
       )}
-      <div className='flex flex-row buttons w-[100%] justify-between px-10'>
+      <div className='flex flex-row buttons w-[100%] justify-between px-10 pb-[20px]'>
         {currentForm === 1 && (
           <Button disabled className='text-background bg-secondary'>
             Back

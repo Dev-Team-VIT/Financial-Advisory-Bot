@@ -4,7 +4,7 @@ import Placeholder from "../assets/placeholder.svg";
 export default function AboutUs() {
   return (
     <>
-      <section className="w-full flex flex-col items-center">
+      <section id="aboutus" className="w-full flex flex-col items-center">
         <div className="container px-4 md:px-6">
           <div className="space-y-6 text-center flex flex-col items-center justify-center">
             <div className="space-y-2 flex flex-col items-center justify-center">
