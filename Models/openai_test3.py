@@ -35,15 +35,16 @@ def investment_advice():
 
     try:
         message_content = (
-            f"I am seeking {investment_type} investment advice based on my current financial situation. "
-            f"Here are the details:\n"
-            f"Annual Income: {annual_income}\n"
-            f"Fixed Deposits (FDs): {num_fds} FDs of {fd_amounts}\n"
-            f"Mutual Funds: Investment of {mutual_fund_investment}\n"
-            f"Given this financial status, could you suggest some suitable {investment_options_type} investment options "
-            f"that can help me diversify my portfolio and achieve high returns?\n"
-            "Provide me specific information naming certain companies, FDs, stocks, and with their analytical data."
-        )
+    f"I am seeking {investment_type} investment advice based on my current financial situation. "
+    f"Here are the details:\n"
+    f"Annual Income: ₹{annual_income}\n"
+    f"Fixed Deposits (FDs): {num_fds} FDs of ₹{fd_amounts}\n"
+    f"Mutual Funds: Investment of ₹{mutual_fund_investment}\n"
+    f"Given this financial status, could you suggest some suitable {investment_options_type} investment options "
+    f"that can help me diversify my portfolio and achieve high returns?\n"
+    "Provide me specific information naming certain companies, FDs, stocks, and with their analytical data."
+)
+
 
         message = client.beta.threads.messages.create(
             thread_id=thread.id,
