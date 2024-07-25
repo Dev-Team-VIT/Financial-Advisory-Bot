@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import Input from './ui/input';
 import Toogle from './ui/Toogle';
 import { Button } from './ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select"
+
 
 interface FormData {
   firstname: string;
@@ -88,12 +98,18 @@ function Form() {
               <Input type='date' placeholder='DOB' name='DOB' className='rounded-lg' value={formOneData.dob} onChange={(e) => setFormOneData({ ...formOneData, dob: e.target.value })}></Input>
             </div>
             <div>
-              <Toogle
-                lable='Marital Status'
-                options={['Married', 'Unmarried', 'Divorced']}
-                selectedOption={selectedMaritalStatus}
-                onOptionSelect={(maritalStatus) => setSelectedMaritalStatus(maritalStatus)}
-              />
+              <Select>
+                <SelectTrigger className="w-[180px] bg-greyBg outline-orange">
+                  <SelectValue placeholder="Marital Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup className='bg-background'>
+                    <SelectLabel>Marital Status</SelectLabel>
+                    <SelectItem value="Married">Married</SelectItem>
+                    <SelectItem value="Unmarried">Unmarried</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -105,21 +121,32 @@ function Form() {
               <Input placeholder='Annual Income' type='text' name='annual Income' className='rounded-lg' value={formTwoData.annualIncome} onChange={(e) => setFormTwoData({ ...formTwoData, annualIncome: e.target.value })}></Input>
             </div>
             <div>
-              <Input placeholder='Fixed Deposits' type='text' name='fixed Deposits' className='rounded-lg' value={formTwoData.fixedDeposits} onChange={(e) => setFormTwoData({ ...formTwoData, fixedDeposits: e.target.value })}></Input>
+              <Input placeholder='Total FD Amount' type='text' name='fixed Deposits' className='rounded-lg' value={formTwoData.fixedDeposits} onChange={(e) => setFormTwoData({ ...formTwoData, fixedDeposits: e.target.value })}></Input>
             </div>
             <div>
-              <Input placeholder='Mutual Fund Investments' type='text' name='mutual Fund Investments' className='rounded-lg' value={formTwoData.mutualFundInvestments} onChange={(e) => setFormTwoData({ ...formTwoData, mutualFundInvestments: e.target.value })}></Input>
+              <Input placeholder='Number of MFs' type='text' name='mutual Fund Investments' className='rounded-lg' value={formTwoData.mutualFundInvestments} onChange={(e) => setFormTwoData({ ...formTwoData, mutualFundInvestments: e.target.value })}></Input>
             </div>
           </div>
           <div className='flex flex-col w-full justify-around gap-[30px]'>
+              <label htmlFor='risk' className="ml-[10px] mb-[-30px] text-[12px] font-bold text-start">RISK TOLERANCE</label>
+            <Select name='risk'>
+              <SelectTrigger className="w-[180px] bg-greyBg outline-orange">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className='bg-background'>
+                <SelectGroup className='bg-background'>
+                  <SelectLabel>Risk Tolerance</SelectLabel>
+                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <div>
-              <Input placeholder='Risk Tolerance' type='text' name='risk Tolerance' className='rounded-lg' value={formTwoData.riskTolerance} onChange={(e) => setFormTwoData({ ...formTwoData, riskTolerance: e.target.value })}></Input>
+              <Input placeholder='Number of investments' type='text' name='stock Market Investment' className='rounded-lg' value={formTwoData.stockMarketInvestment} onChange={(e) => setFormTwoData({ ...formTwoData, stockMarketInvestment: e.target.value })}></Input>
             </div>
             <div>
-              <Input placeholder='Stock Market Investment' type='text' name='stock Market Investment' className='rounded-lg' value={formTwoData.stockMarketInvestment} onChange={(e) => setFormTwoData({ ...formTwoData, stockMarketInvestment: e.target.value })}></Input>
-            </div>
-            <div>
-              <Input placeholder='Current Financial Situation' type='text' name='current Financial Situation' className='rounded-lg' value={formTwoData.currentFinancialSituation} onChange={(e) => setFormTwoData({ ...formTwoData, currentFinancialSituation: e.target.value })}></Input>
+              <Input placeholder='Discribe' type='text' name='current Financial Situation' className='rounded-lg' value={formTwoData.currentFinancialSituation} onChange={(e) => setFormTwoData({ ...formTwoData, currentFinancialSituation: e.target.value })}></Input>
             </div>
           </div>
         </div>

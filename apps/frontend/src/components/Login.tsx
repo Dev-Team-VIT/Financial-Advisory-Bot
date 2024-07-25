@@ -5,35 +5,36 @@ import { Button } from './ui/button';
 import { Separator } from "./ui/separator";
 import Google from '../assets/Google.svg';
 import axios from 'axios';
-import { redirect, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
+import { Checkbox } from './ui/checkbox';
 
-interface loginData{
-  email:string,
-  password:string
+interface loginData {
+  email: string,
+  password: string
 }
 
 
 function Login() {
   const nav = useNavigate();
-  const [loginData, setLoginData] = useState<loginData>({email:'', password:''});
+  const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' });
   const url = "https://financial-advisory-bot-production.up.railway.app/api/v1/user/signin"
   const [validationMessage, setValidationMessage] = useState('');
   const [validPassword, setValidPassword] = useState(false);
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-    const {name, value} = e.target;
-    setLoginData(prevData =>({...prevData,[name]:value}));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) =>{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
+    try {
       const res = await axios.post(url, loginData);
       localStorage.setItem("token", res.data.token);
 
       localStorage.setItem("username", res.data.username);
       nav('/')
     }
-    catch(err){
+    catch (err) {
       console.log(err);
     };
   }
@@ -55,31 +56,35 @@ function Login() {
   };
 
   return (
-    <form className='login flex flex-col w-[fit-content] h-[100vh] items-center justify-center gap-[20px] m-[-100px]' onSubmit={handleSubmit}>
-      <h1 className='text-2xl md:text-5xl mb-[50px] font-bold'>Login to Money Mantra</h1>
-      <Input type='email' value={loginData.email} onChange={handleChange} name='email' placeholder='Enter your email' className='px-[15px] w-[300px] outline-none md:w-[400px]' />
+    <form className='login flex flex-col w-[fit-content] h-[100vh] items-center justify-center md:items-center md:justify-center gap-[20px] m-[-100px]' onSubmit={handleSubmit}>
+      <h1 className='text-start text-2xl md:text-5xl mb-[50px] font-bold'>Login to Money Mantra</h1>
+      <Input type='email' value={loginData.email} onChange={handleChange} name='email' placeholder='Enter your email' className='px-[15px] w-[90vw] outline-none md:w-[400px]' />
       <Input
         type='password'
         value={loginData.password}
         onChange={handlePass}
         name='password'
         placeholder='Enter your Password'
-        className={`px-[15px] w-[300px] md:w-[400px] outline-none ${
-          validPassword ? 'focus:border-2 focus:border-[green]' : 'focus:border-2 focus:border-[red]'
-        }`}
+        className={`px-[15px] w-[90vw] md:w-[400px] outline-none ${validPassword ? 'focus:border-2 focus:border-[green]' : 'focus:border-2 focus:border-[red]'
+          }`}
       />
       {validationMessage && <label htmlFor='password' className='text-[12px] mt-[-20px] text-red-500'>{validationMessage}</label>}
-      <div className='flex flex-row justify-between w-[280px] md:w-[380px]'>
+      <div className='flex flex-row justify-between w-[85vw] md:w-[380px]'>
         <div className='flex flex-row justify-center items-center gap-[5px]'>
-          <input type="radio" name="remember" id="remember" />
-          <label htmlFor='remember'>Remember Me</label>
+          <Checkbox id="terms" />
+          <label
+            htmlFor="terms"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Remember me
+          </label>
         </div>
         <div>
           <p className='transition ease-in-out cursor-pointer text-[#afafaf] underline decoration-1 hover:text-[black]'>Forget Password?</p>
         </div>
       </div>
-      <Button className='w-[300px] md:w-[400px] text-background hover:bg-mutedOrange text-background rounded-[50px]'>Login</Button>
-      <div className='flex items-center justify-center w-[100px] md:w-[170px] gap-[10px]'>
+      <Button className='w-[90vw] md:w-[400px] text-background hover:bg-mutedOrange text-background rounded-[50px]'>Login</Button>
+      <div className='hidden md:flex items-center justify-center w-[100px] md:w-[170px] gap-[10px]'>
         <Separator className='my-4 bg-[black]'></Separator>
         <p>OR</p>
         <Separator className='my-4 bg-[black]'></Separator>

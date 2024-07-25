@@ -4,6 +4,8 @@ import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 import Google from '../assets/Google.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 interface SignupFormState {
   username: string;
@@ -23,9 +25,8 @@ function Signup() {
   const [validPassword, setValidPassword] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [validationMessage, setValidationMessage] = useState('');
-  const [revalidationMessage, setReValidationMessage] = useState('');
 
-
+  const navigate = useNavigate();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -55,33 +56,17 @@ function Signup() {
     }
   };
 
-  const handleReEnterPass = (e: ChangeEvent<HTMLInputElement>) => {
-    const reEnterPassword = e.target.value;
-    setFormData((prevData) => ({
-      ...prevData,
-      reEnterPassword,
-    }));
-
-    if (reEnterPassword === formData.password) {
-      setPasswordMatch(true);
-      setReValidationMessage("")
-    } else {
-      setPasswordMatch(false);
-      setReValidationMessage("Password do not match")
-    }
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validPassword || !passwordMatch) {
+    if (!validPassword) {
       setValidationMessage('Please fix the errors before submitting');
       return;
     }
-
     try {
       const res = await axios.post(url, formData);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -99,7 +84,7 @@ function Signup() {
         onChange={handleChange}
         name='username'
         placeholder='Enter your username'
-        className='px-[15px] w-[300px] outline-none md:w-[400px]'
+        className='px-[15px] w-[90vw] outline-none md:w-[400px]'
       />
       <Input
         type='email'
@@ -107,7 +92,7 @@ function Signup() {
         onChange={handleChange}
         name='email'
         placeholder='Enter your email'
-        className='px-[15px] w-[300px] outline-none md:w-[400px]'
+        className='px-[15px] w-[90vw] outline-none md:w-[400px]'
       />
       <Input
         type='password'
@@ -115,26 +100,15 @@ function Signup() {
         onChange={handlePass}
         name='password'
         placeholder='Enter your Password'
-        className={`px-[15px] w-[300px] md:w-[400px] outline-none ${
+        className={`px-[15px] w-[90vw] md:w-[400px] outline-none ${
           validPassword ? 'focus:border-2 focus:border-[green]' : 'focus:border-2 focus:border-[red]'
         }`}
       />
       {validationMessage && <p className='text-red-500'>{validationMessage}</p>}
-      <Input
-        type='password'
-        value={formData.reEnterPassword}
-        onChange={handleReEnterPass}
-        name='reEnterPassword'
-        placeholder='Re-Enter your Password'
-        className={`px-[15px] w-[300px] md:w-[400px] outline-none ${
-          passwordMatch ? 'focus:border-2 focus:border-[green]' : 'focus:border-2 focus:border-[red]'
-        }`}
-      />
-      {!passwordMatch && <p className='text-red-500'>{revalidationMessage}</p>}
-      <Button className='w-[300px] md:w-[400px] text-background hover:bg-mutedOrange text-background rounded-[50px]'>
+      <Button className='w-[90vw] md:w-[400px] text-background hover:bg-mutedOrange text-background rounded-[50px]'>
         Signup
       </Button>
-      <div className='flex items-center justify-center w-[100px] md:w-[170px] gap-[10px]'>
+      <div className='hidden md:flex items-center justify-center w-[100px] md:w-[170px] gap-[10px]'>
         <Separator className='my-4 bg-[black]'></Separator>
         <p>OR</p>
         <Separator className='my-4 bg-[black]'></Separator>
