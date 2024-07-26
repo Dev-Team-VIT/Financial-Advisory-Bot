@@ -1,3 +1,7 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
+
 name: Build and deploy Python app to Azure Web App - MoneyMantra
 
 on:
@@ -16,36 +20,28 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' # Update to Python 3.10
-
-      - name: Navigate to Models directory
-        run: cd Models
+          python-version: '3.10'
 
       - name: Create and start virtual environment
         run: |
-          cd Models
           python -m venv venv
           source venv/bin/activate
       
       - name: Install dependencies
-        run: |
-          cd Models
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: |
-          cd Models
-          zip release.zip ./* -r
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
-            Models/release.zip
-            Models/venv/ # Exclude venv folder
+            release.zip
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,7 +50,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -63,14 +59,15 @@ jobs:
           name: python-app
 
       - name: Unzip artifact for deployment
-        run: unzip Models/release.zip -d Models
+        run: unzip release.zip
 
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4B9ABCB441634A1C9F1697E1FBF7DC27 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B45DD836C8534341AAA85EB5A81834EF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_45479DD19D1E49BFBAAB41DAAEB5C1AA }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3E68BA5845644AF2A29C78A8911F5CDD }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C5C3D783A28C45B1875059DC8BA6A25D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_997C72C9D34C4BD1ADDB8FA757913FCE }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -78,4 +75,4 @@ jobs:
         with:
           app-name: 'MoneyMantra'
           slot-name: 'Production'
-          package: Models/release.zip
+          
