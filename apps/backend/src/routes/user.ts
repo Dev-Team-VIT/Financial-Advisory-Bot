@@ -37,7 +37,9 @@ userRouter.post("/signup", async (req, res) => {
         email: req.body.email
     })
     if(existingUser) {
-        res.status(411).json({message: "Email already exists"})
+        res.status(411).json({
+            type:"failure", 
+            message: "Email already exists"})
     }
     const newUser = await User.create({
         email: req.body.email,
@@ -51,6 +53,7 @@ userRouter.post("/signup", async (req, res) => {
     }, JWT_SECRET)
 
     res.status(200).json({
+        type:"success",
         message: "Signed up Successfully",
         token: token,
         username:newUser.username,
@@ -67,6 +70,7 @@ userRouter.post("/signin", async (req, res) => {
 
     if(!parsedInput.success) {
         res.status(411).json({
+            type:"failure",
             message: "Invalid Inputs"
         })
     }
@@ -74,19 +78,34 @@ userRouter.post("/signin", async (req, res) => {
     const existingUser = await User.findOne({
         email: req.body.email
     })
-    const user = existingUser?.username;
-
+    
     if(existingUser) {
-        const token = jwt.sign({
-            userId: existingUser._id
-        }, JWT_SECRET)
-        res.status(200).json({
-            message: "Logged In successFully",
-            token: token, 
-            username:user,
+        const user = existingUser?.username;
+        const pass = existingUser?.password;
+        if (pass === parsedInput.data?.password){
+            const token = jwt.sign({
+                userId: existingUser._id
+            }, JWT_SECRET)
+            res.status(200).json({
+                type:"success",
+                message: "Logged In successFully",
+                token: token, 
+                username:user,
+            })
+            return;
+        }
+        res.status(411).json({
+            type:"failure",
+            message:"Incorrect Password",
         })
         return;
+
     }
+    res.status(411).json({
+        type:"failure",
+        message:"User not found",
+    })
+    return;
 })
 
 userRouter.post('/forgot-password', async (req, res) => {
@@ -95,6 +114,7 @@ userRouter.post('/forgot-password', async (req, res) => {
 
     if(!user) {
         res.status(403).json({
+            type:"failure",
             message: "User does not exist"
         })
     }
@@ -121,15 +141,19 @@ userRouter.post('/forgot-password', async (req, res) => {
 
       transporter.sendMail(mailOptions, (err) => {
         if (err) {
-          return res.status(500).json({ error: 'Failed to send email' });
+          return res.status(500).json({ 
+            type:"failure",
+            error: 'Failed to send email' });
         }
-        res.status(200).json({ message: 'Password reset email sent' });
+        res.status(200).json({ 
+            type:"success",
+            message: 'Password reset email sent' });
       });
 
       res.status(200).json({
         token: token
       })
-})
+});
 
 userRouter.post('/reset-password/:token', resetPassword ,async (req: any, res: any) =>{
     
@@ -144,6 +168,7 @@ userRouter.post('/reset-password/:token', resetPassword ,async (req: any, res: a
 
 
         res.status(200).json({
+            type:"success",
             message: "Password has been reset"
         })
     } catch(err) {
@@ -151,6 +176,6 @@ userRouter.post('/reset-password/:token', resetPassword ,async (req: any, res: a
             error: err
         })
     }
-})
+});
 
 module.exports = userRouter

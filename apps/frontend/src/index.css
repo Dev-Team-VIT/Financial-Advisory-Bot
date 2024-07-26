@@ -22,11 +22,31 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@keyframes pop-in {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  body {
-    @apply bg-background text-foreground;
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
+}
+
+@keyframes pop-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.alert-pop-in {
+  animation: pop-in 0.3s ease-out;
+}
+
+.alert-pop-out {
+  animation: pop-out 0.3s ease-in;
 }

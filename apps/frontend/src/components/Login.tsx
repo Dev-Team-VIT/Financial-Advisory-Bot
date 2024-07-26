@@ -1,46 +1,54 @@
-// src/components/Login.jsx
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import Input from './ui/input';
 import { Button } from './ui/button';
 import { Separator } from "./ui/separator";
 import Google from '../assets/Google.svg';
 import axios from 'axios';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Checkbox } from './ui/checkbox';
+import { useAlert } from '../context/alertContext';
 
 interface loginData {
   email: string,
   password: string
 }
 
-
 function Login() {
   const nav = useNavigate();
+  const { setAlert } = useAlert();
   const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' });
-  const url = "https://financial-advisory-bot-production.up.railway.app/api/v1/user/signin"
+  const url = `http://127.0.0.1:3000/api/v1/user/signin`;
   const [validationMessage, setValidationMessage] = useState('');
   const [validPassword, setValidPassword] = useState(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const res = await axios.post(url, loginData);
-      localStorage.setItem("token", res.data.token);
-
-      localStorage.setItem("username", res.data.username);
-      nav('/')
-    }
-    catch (err) {
+      if (res.data.type === 'success') {
+        setAlert('success');
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        setTimeout(() =>{
+          nav('/');
+        }, 500);
+      } else {
+        setAlert('failure');
+      }
+    } catch (err) {
+      setAlert('failure');
       console.log(err);
-    };
-  }
+    }
+  };
+
   const handlePass = (e: ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value;
-    setLoginData((prevData) => ({
+    setLoginData(prevData => ({
       ...prevData,
       password,
     }));
@@ -52,7 +60,6 @@ function Login() {
       setValidPassword(false);
       setValidationMessage('Password must be at least 8 characters long');
     }
-
   };
 
   return (
