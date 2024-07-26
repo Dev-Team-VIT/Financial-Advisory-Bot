@@ -5,6 +5,7 @@ import { Separator } from '../components/ui/separator';
 import Google from '../assets/Google.svg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../context/alertContext';
 
 
 interface SignupFormState {
@@ -16,6 +17,7 @@ interface SignupFormState {
 
 function Signup() {
   const url = 'https://financial-advisory-bot-production.up.railway.app/api/v1/user/signup';
+  const {setAlert} = useAlert();
   const [formData, setFormData] = useState<SignupFormState>({
     username: '',
     email: '',
@@ -64,10 +66,18 @@ function Signup() {
     }
     try {
       const res = await axios.post(url, formData);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('username', res.data.username);
-      navigate("/");
+      if (res.data.type === 'success') {
+        setAlert('success');
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        setTimeout(() =>{
+          navigate('/');
+        }, 500);
+      } else {
+        setAlert('failure');
+      }
     } catch (err) {
+      setAlert('failure');
       console.log(err);
     }
   };
