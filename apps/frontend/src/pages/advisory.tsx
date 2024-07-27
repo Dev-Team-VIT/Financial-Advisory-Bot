@@ -28,7 +28,7 @@ function Advisory({}: Props) {
   }, [navigate]);
 
   if (!isLoggedIn) {
-    return null; // Render nothing while checking login state
+    return null;
   }
 
   return (

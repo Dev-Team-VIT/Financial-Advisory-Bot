@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 import json
 import matplotlib.pyplot as plt
 from openai import AzureOpenAI
 
 app = Flask(__name__)
+
+# Enable CORS for all origins
+CORS(app)
 
 # Azure OpenAI settings
 api_key = "2142e2507c494b74999fb3bb680aca1e"
@@ -17,6 +21,7 @@ client = AzureOpenAI(
     azure_endpoint=azure_endpoint,
     api_version=api_version,
 )
+
 
 @app.route('/investment_advice', methods=['POST'])
 def investment_advice():
@@ -35,16 +40,15 @@ def investment_advice():
 
     try:
         message_content = (
-    f"I am seeking {investment_type} investment advice based on my current financial situation. "
-    f"Here are the details:\n"
-    f"Annual Income: ₹{annual_income}\n"
-    f"Fixed Deposits (FDs): {num_fds} FDs of ₹{fd_amounts}\n"
-    f"Mutual Funds: Investment of ₹{mutual_fund_investment}\n"
-    f"Given this financial status, could you suggest some suitable {investment_options_type} investment options "
-    f"that can help me diversify my portfolio and achieve high returns?\n"
-    "Provide me specific information naming certain companies, FDs, stocks, and with their analytical data."
-)
-
+            f"I am seeking {investment_type} investment advice based on my current financial situation. "
+            f"Here are the details:\n"
+            f"Annual Income: ₹{annual_income}\n"
+            f"Fixed Deposits (FDs): {num_fds} FDs of ₹{fd_amounts}\n"
+            f"Mutual Funds: Investment of ₹{mutual_fund_investment}\n"
+            f"Given this financial status, could you suggest some suitable {investment_options_type} investment options "
+            f"that can help me diversify my portfolio and achieve high returns?\n"
+            "Provide me specific information naming certain companies, FDs, stocks, and with their analytical data."
+        )
 
         message = client.beta.threads.messages.create(
             thread_id=thread.id,

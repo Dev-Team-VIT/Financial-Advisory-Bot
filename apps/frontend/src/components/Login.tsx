@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import Input from './ui/input';
 import { Button } from './ui/button';
 import { Separator } from "./ui/separator";
-import Google from '../assets/Google.svg';
+// import Google from '../assets/Google.svg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Checkbox } from './ui/checkbox';
@@ -17,7 +17,7 @@ function Login() {
   const nav = useNavigate();
   const { setAlert } = useAlert();
   const [loginData, setLoginData] = useState<loginData>({ email: '', password: '' });
-  const url = `http://127.0.0.1:3000/api/v1/user/signin`;
+  const url = `https://financial-advisory-bot-production.up.railway.app/api/v1/user/signin`;
   const [validationMessage, setValidationMessage] = useState('');
   const [validPassword, setValidPassword] = useState(false);
 
